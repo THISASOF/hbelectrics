@@ -424,12 +424,13 @@
     footer a { color: var(--blue-light); text-decoration: none; }
     footer a:hover { color: var(--volt); }
     .footer-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      letter-spacing: 3px;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
     }
-    .footer-logo span { color: var(--volt); }
+    .footer-logo img {
+      height: 36px;
+      width: auto;
+      filter: drop-shadow(0 0 6px rgba(255,230,0,0.3));
+    }
     .footer-credit {
       margin-top: 10px;
       font-size: 0.78rem;
@@ -621,7 +622,7 @@
      5. FOOTER MINIMAL
 ══════════════════════════════════════ -->
 <footer>
-  <div class="footer-logo"><span>⚡</span>HBelectrics</div>
+  <div class="footer-logo"><img src="logo_final.png" alt="HBelectrics"/></div>
   <p>
     © 2026 HBelectrics · Bogotá, Colombia ·
     <a href="tel:3019062800">+57 301 906 2800</a> ·
