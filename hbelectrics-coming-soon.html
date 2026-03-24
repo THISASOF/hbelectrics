@@ -8,7 +8,11 @@
   <meta property="og:title" content="HBelectrics — Próximamente ⚡"/>
   <meta property="og:description" content="Algo poderoso está por llegar. Tu electricista de confianza, ahora en línea. Bogotá y alrededores — disponibles 24/7."/>
   <meta property="og:type" content="website"/>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"/>
+  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+  <link rel="manifest" href="site.webmanifest"/>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -71,31 +75,19 @@
 
     /* LOGO */
     .logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.4rem, 6vw, 4.2rem);
-      letter-spacing: 4px;
       margin-bottom: 10px;
-      line-height: 1;
     }
-    .logo .bolt {
-      color: var(--volt);
-      display: inline-block;
-      animation: bolt-pulse 2s ease-in-out infinite;
-      text-shadow: 0 0 20px rgba(255,230,0,0.8), 0 0 40px rgba(255,230,0,0.4);
-      margin-right: 2px;
+    .logo-img {
+      max-width: min(360px, 82vw);
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      filter: drop-shadow(0 0 18px rgba(255,230,0,0.45)) drop-shadow(0 0 40px rgba(255,230,0,0.2));
+      animation: logo-glow 2.5s ease-in-out infinite;
     }
-    .logo .hb       { color: var(--blue-light); }
-    .logo .electrics{ color: var(--volt); }
-
-    @keyframes bolt-pulse {
-      0%,100% {
-        text-shadow: 0 0 20px rgba(255,230,0,0.8), 0 0 40px rgba(255,230,0,0.4);
-        transform: scale(1);
-      }
-      50% {
-        text-shadow: 0 0 30px rgba(255,230,0,1), 0 0 60px rgba(255,230,0,0.7), 0 0 90px rgba(255,230,0,0.3);
-        transform: scale(1.12);
-      }
+    @keyframes logo-glow {
+      0%,100% { filter: drop-shadow(0 0 18px rgba(255,230,0,0.45)) drop-shadow(0 0 40px rgba(255,230,0,0.2)); }
+      50%      { filter: drop-shadow(0 0 28px rgba(255,230,0,0.8)) drop-shadow(0 0 60px rgba(255,230,0,0.4)); }
     }
 
     .tag-prox {
@@ -417,33 +409,6 @@
       transform: translateY(-2px);
     }
 
-    /* ── SOCIAL ── */
-    .social-row {
-      margin-top: 52px;
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .social-link {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      background: var(--dark3);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 50px;
-      padding: 9px 20px;
-      color: var(--gray);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 700;
-      transition: all .2s;
-    }
-    .social-link:hover {
-      border-color: var(--blue);
-      color: var(--blue-light);
-    }
-
     /* ── FOOTER ── */
     footer {
       position: relative;
@@ -465,6 +430,17 @@
       margin-bottom: 6px;
     }
     .footer-logo span { color: var(--volt); }
+    .footer-credit {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: rgba(122,136,153,0.6);
+    }
+    .footer-credit a {
+      color: rgba(77,144,255,0.7);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-credit a:hover { color: var(--blue-light); }
 
     /* ── WHATSAPP FLOAT ── */
     .wa-float {
@@ -531,7 +507,7 @@
   <div class="tag-prox reveal">✦ &nbsp;Próximamente</div>
 
   <div class="logo reveal">
-    <span class="bolt">⚡</span><span class="hb">HB</span><span class="electrics">electrics</span>
+    <img src="logo_final.png" alt="H.B. Electrics" class="logo-img"/>
   </div>
 
   <h1 class="reveal">Algo <span>poderoso</span><br>está por llegar</h1>
@@ -638,12 +614,6 @@
     <a href="https://wa.me/573019062800" target="_blank" rel="noopener" class="btn-wa">💬 &nbsp;Escribir por WhatsApp</a>
   </div>
 
-  <!-- REDES SOCIALES -->
-  <div class="social-row reveal">
-    <a href="#" class="social-link">📸 Instagram</a>
-    <a href="#" class="social-link">👍 Facebook</a>
-    <a href="#" class="social-link">▶️ YouTube</a>
-  </div>
 
 </section>
 
@@ -657,6 +627,7 @@
     <a href="tel:3019062800">+57 301 906 2800</a> ·
     <a href="https://wa.me/573019062800" target="_blank" rel="noopener">WhatsApp</a>
   </p>
+  <p class="footer-credit">Diseñado y desarrollado por <a href="https://thisa.cloud" target="_blank" rel="noopener">thisa.cloud</a></p>
 </footer>
 
 <!-- BOTÓN WHATSAPP FLOTANTE -->
