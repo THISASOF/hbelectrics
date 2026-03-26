@@ -58,13 +58,22 @@
   <!-- PRELOAD imagen hero (LCP crítico) -->
   <link rel="preload" as="image" href="public/1.jpeg" fetchpriority="high"/>
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JPQ4F5CRL3"></script>
+  <!-- Google Analytics — carga solo con consentimiento del usuario -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-JPQ4F5CRL3');
+    function loadGA() {
+      if (document.getElementById('ga-script')) return;
+      var s = document.createElement('script');
+      s.id = 'ga-script';
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-JPQ4F5CRL3';
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-JPQ4F5CRL3');
+    }
+    if (localStorage.getItem('hb_cookie') === 'accepted') loadGA();
   </script>
 
   <!-- SCHEMA.ORG — LocalBusiness + ElectricalContractor -->
@@ -1025,6 +1034,45 @@
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
       .hero-image img { max-width: 240px; }
     }
+  /* ── COOKIE BANNER ── */
+  #cookie-banner {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+    background: #0D1420; border-top: 1px solid rgba(77,144,255,.25);
+    padding: 16px 24px; display: flex; align-items: center;
+    gap: 16px; flex-wrap: wrap;
+    box-shadow: 0 -4px 24px rgba(0,0,0,.5);
+  }
+  #cookie-banner p { margin: 0; font-size: .85rem; color: var(--gray); flex: 1; min-width: 220px; }
+  #cookie-banner a { color: var(--blue-light); text-decoration: underline; cursor: pointer; }
+  .cookie-btns { display: flex; gap: 8px; }
+  .cookie-btns button {
+    border: none; border-radius: 50px; padding: 8px 20px;
+    font-family: var(--font-body); font-weight: 700; font-size: .85rem; cursor: pointer;
+  }
+  #btn-accept { background: var(--volt); color: var(--dark); }
+  #btn-reject { background: transparent; color: var(--gray); border: 1px solid rgba(122,136,153,.4); }
+  #btn-reject:hover { color: var(--white); }
+
+  /* ── PRIVACY MODAL ── */
+  #privacy-modal {
+    display: none; position: fixed; inset: 0; z-index: 10000;
+    background: rgba(0,0,0,.75); align-items: center; justify-content: center; padding: 16px;
+  }
+  #privacy-modal.open { display: flex; }
+  .privacy-box {
+    background: var(--dark3); border: 1px solid rgba(77,144,255,.2);
+    border-radius: 16px; padding: 32px; max-width: 640px; width: 100%;
+    max-height: 80vh; overflow-y: auto;
+  }
+  .privacy-box h2 { font-family: var(--font-display); font-size: 1.8rem; color: var(--volt); margin: 0 0 16px; }
+  .privacy-box h3 { font-size: 1rem; color: var(--blue-light); margin: 20px 0 6px; }
+  .privacy-box p, .privacy-box li { font-size: .9rem; color: var(--gray); line-height: 1.7; }
+  .privacy-box ul { padding-left: 18px; }
+  .privacy-close {
+    margin-top: 24px; background: var(--blue); color: var(--white);
+    border: none; border-radius: 50px; padding: 10px 28px;
+    font-family: var(--font-body); font-weight: 700; cursor: pointer;
+  }
   </style>
 </head>
 <body>
@@ -1499,6 +1547,56 @@
     </address>
   </footer>
 
+  <!-- COOKIE BANNER -->
+  <div id="cookie-banner" role="dialog" aria-label="Aviso de cookies">
+    <p>
+      Usamos cookies de <strong style="color:var(--white)">Google Analytics</strong> para entender cómo usan el sitio nuestros visitantes y mejorar el servicio.
+      <a onclick="document.getElementById('privacy-modal').classList.add('open')">Ver política de privacidad</a>
+    </p>
+    <div class="cookie-btns">
+      <button id="btn-accept">Aceptar</button>
+      <button id="btn-reject">Rechazar</button>
+    </div>
+  </div>
+
+  <!-- PRIVACY MODAL -->
+  <div id="privacy-modal" role="dialog" aria-modal="true" aria-label="Política de privacidad">
+    <div class="privacy-box">
+      <h2>Política de Privacidad</h2>
+      <p>Última actualización: marzo 2026 · HBelectrics · Bogotá, Colombia</p>
+
+      <h3>1. Responsable del tratamiento</h3>
+      <p><strong style="color:var(--white)">HBelectrics</strong> — empresa de servicios eléctricos con cobertura en Bogotá y alrededores.<br/>
+      Contacto: <a href="mailto:hbelectrics@gmail.com" style="color:var(--blue-light)">hbelectrics@gmail.com</a> · +57 301 906 2800</p>
+
+      <h3>2. Datos que recopilamos</h3>
+      <ul>
+        <li><strong style="color:var(--white)">Cookies analíticas (Google Analytics):</strong> páginas visitadas, tiempo en el sitio, dispositivo y ubicación aproximada. No identifican a la persona.</li>
+        <li><strong style="color:var(--white)">Formulario de contacto:</strong> nombre y teléfono que usted ingresa voluntariamente para agendar una visita técnica.</li>
+      </ul>
+
+      <h3>3. Finalidad</h3>
+      <ul>
+        <li>Analítica web: entender el tráfico y mejorar la experiencia del sitio.</li>
+        <li>Contacto comercial: responder su solicitud de servicio vía WhatsApp.</li>
+      </ul>
+
+      <h3>4. Base legal (Ley 1581 de 2012 — Colombia)</h3>
+      <p>El tratamiento se realiza con su <strong style="color:var(--white)">consentimiento expreso</strong> al aceptar las cookies, y para la ejecución del contrato de servicio cuando nos contacta.</p>
+
+      <h3>5. Terceros</h3>
+      <p>Usamos <strong style="color:var(--white)">Google Analytics</strong> (Google LLC). Los datos se procesan según la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color:var(--blue-light)">política de privacidad de Google</a>. No vendemos ni compartimos sus datos con otros terceros.</p>
+
+      <h3>6. Sus derechos</h3>
+      <p>Tiene derecho a conocer, actualizar, rectificar y suprimir sus datos. Para ejercerlos escríbanos a <a href="mailto:hbelectrics@gmail.com" style="color:var(--blue-light)">hbelectrics@gmail.com</a> o al +57 301 906 2800.</p>
+
+      <h3>7. Cookies</h3>
+      <p>Puede retirar su consentimiento en cualquier momento recargando la página y eligiendo "Rechazar", o borrando las cookies del navegador.</p>
+
+      <button class="privacy-close" onclick="document.getElementById('privacy-modal').classList.remove('open')">Cerrar</button>
+    </div>
+  </div>
+
   <!-- FLOATING WHATSAPP -->
   <a href="https://wa.me/573019062800" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.744a.5.5 0 0 0 .613.613l5.886-1.476A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.528-5.218-1.443l-.374-.222-3.876.971.985-3.775-.244-.389A10 10 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
@@ -1534,6 +1632,30 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // ── Cookie consent ──
+    (function() {
+      var banner = document.getElementById('cookie-banner');
+      var consent = localStorage.getItem('hb_cookie');
+      if (consent) { banner.style.display = 'none'; return; }
+      document.getElementById('btn-accept').addEventListener('click', function() {
+        localStorage.setItem('hb_cookie', 'accepted');
+        banner.style.display = 'none';
+        loadGA();
+      });
+      document.getElementById('btn-reject').addEventListener('click', function() {
+        localStorage.setItem('hb_cookie', 'rejected');
+        banner.style.display = 'none';
+      });
+      // Cerrar modal con Escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') document.getElementById('privacy-modal').classList.remove('open');
+      });
+      // Cerrar modal al click fuera
+      document.getElementById('privacy-modal').addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('open');
+      });
+    })();
 
     // ── Contact form → WhatsApp ──
     function sendContactWA() {
